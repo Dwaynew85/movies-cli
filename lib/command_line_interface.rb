@@ -31,10 +31,11 @@ class CLI
     puts "Directed By: #{@mov.director.class == Array ? @mov.director.uniq.join(' & ') : (@mov.director)}"
     puts "Written By: #{@mov.writers.class == Array ? @mov.writers.uniq.join(' & ') : (@mov.writers)}"
     puts "Starring: #{@mov.stars.class == Array ? @mov.stars.uniq.join(' & ') : (@mov.stars)}"
+    self.menu
   end
 
   def self.trailer
-    @mov.trailer_link
+    puts "Click the link to view trialer:\n #{@mov.trailer_link}"
   end
 
   def self.search
@@ -51,4 +52,30 @@ class CLI
     end
   end
 
+  def self.movie_select
+    CLI.display_movies
+    puts "Which movie's details would you like to see? Please select by ranking number:"
+    rank = gets.chomp.to_i
+    CLI.display_by_rank(rank)
+  end
+
+  def self.menu
+    puts "What would you like to do next?"
+    puts "1. View movie's trailer link"
+    puts "2. Go back to list of top 20 movies"
+    puts "3. That's all, folks!(Exit)"
+    menu_selection = gets.chomp
+    case menu_selection
+    when "1"
+      self.trailer
+      self.menu
+    when "2"
+      self.movie_select
+    when "3"
+      exit
+    else
+      puts "Please select an option between 1-3"
+      self.menu
+    end
+  end
 end

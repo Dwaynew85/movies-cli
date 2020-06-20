@@ -1,11 +1,9 @@
 require_relative '../config/environment.rb'
 
-CLI.new.run
 puts "Hello!!!"
+CLI.new.run
 # sleep(2)
 puts "Here is a list of the top 20 ranked movies according to IMDB:"
-CLI.display_movies
-puts "Which movie's details would you like to see? Please select by ranking number"
-rank = gets.chomp.to_i
-CLI.display_by_rank(rank)
+CLI.movie_select
+
 # sleep(2)
