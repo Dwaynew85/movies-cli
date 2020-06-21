@@ -10,7 +10,7 @@ class CLI
 
   def self.display_movies
     Scraper.all.each do |movie|
-      puts "#{movie[:rank]} #{movie[:title]} #{movie[:year]}"
+      puts "#{movie[:rank].colorize(:blue)} #{movie[:title]} #{movie[:year]}"
     end
   end
 
@@ -29,7 +29,7 @@ class CLI
   end
 
   def self.trailer
-    puts "Click the link to view trialer:\n #{@mov.trailer_link}\n"
+    puts "Click the link to view trialer:\n #{@mov.trailer_link}\n".colorize(:green)
     sleep(1)
     self.menu_2
   end
@@ -38,7 +38,7 @@ class CLI
     movies = Movies.all.select {|movie| movie.stars.include?(star) }
     opt = movies.each_with_index {|mov, index| puts "#{index + 1}. #{mov.title}" }.uniq
     puts "#{opt.length + 1}. Main Menu"
-    puts "Please make a selection from the above."
+    puts "Please make a selection from the above.".colorize(:green)
     above = gets.chomp.to_i - 1
     @mov = opt[above]
     if @mov.class == Movies
@@ -59,17 +59,17 @@ class CLI
 
   def self.movie_select
     CLI.display_movies
-    puts "Which movie's details would you like to see? Please select by ranking number:"
+    puts "Which movie's details would you like to see? Please select by ranking number:".colorize(:green)
     rank = gets.chomp.to_i
     CLI.display_by_rank(rank)
   end
 
   def self.menu
-    puts "What would you like to do next?"
-    puts "1. View movie's trailer link"
-    puts "2. Go back to list of top 20 movies"
-    puts "3. Search for movies including your favorite star"
-    puts "4. That's all, folks!(Exit)"
+    puts "What would you like to do next?".colorize(:green)
+    puts "1. View movie's trailer link".colorize(:green)
+    puts "2. Go back to list of top 20 movies".colorize(:green)
+    puts "3. Search for movies including your favorite star".colorize(:green)
+    puts "4. That's all, folks!(Exit)".colorize(:green)
     menu_selection = gets.chomp
     case menu_selection
     when "1"
@@ -77,55 +77,55 @@ class CLI
     when "2"
       self.movie_select
     when "3"
-      puts "Enter the exact spelling of the star you'd like to seach for. If they made the cut, the movies they're in will be listed."
+      puts "Enter the exact spelling of the star you'd like to seach for. If they made the cut, the movies they're in will be listed.".colorize(:green)
       star = gets.chomp
       self.search_by_star(star)
     when "4"
       exit
     else
-      puts "Please select an option between 1-3"
+      puts "Please select an option between 1-3".colorize(:green)
       self.menu
     end
   end
 
   def self.menu_2
-    puts "What would you like to do next?"
-    puts "1. Go back to list of top 20 movies"
-    puts "2. Search for movies including your favorite star"
-    puts "3. That's all, folks!(Exit)"
+    puts "What would you like to do next?".colorize(:green)
+    puts "1. Go back to list of top 20 movies".colorize(:green)
+    puts "2. Search for movies including your favorite star".colorize(:green)
+    puts "3. That's all, folks!(Exit)".colorize(:green)
     menu_selection = gets.chomp
     case menu_selection
     when "1"
       self.movie_select
     when "2"
-      puts "Enter the exact spelling of the star you'd like to seach for. If they made the cut, the movies they're in will be listed."
+      puts "Enter the exact spelling of the star you'd like to seach for. If they made the cut, the movies they're in will be listed.".colorize(:green)
       star = gets.chomp
       self.search_by_star(star)
     when "3"
       exit
     when "4"
-      puts "You sure you wanna go for broke? Select y or n"
+      puts "You sure you wanna go for broke? Select y or n".colorize(:red)
       broke = gets.chomp
       if broke == "y" || broke =="Y"
-        puts "Here's the top 250!!!!"
+        puts "Here's the top 250!!!!".colorize(:red).underline
          self.display_wowzers
        else
          exit
        end
     else
-      puts "Please select between 1-4...I meant 3! 1-3. Don't select 4."
+      puts "Please select between 1-4...I meant 3! 1-3. Don't select 4.".colorize(:green)
       self.menu_2
     end
   end
 
   def self.display_wowzers
-    puts "This may take a minute....."
+    puts "This may take a minute.....".colorize(:red)
     Movies.all.clear
     Movies.create_from_list(Scraper.wowzers)
     Scraper.wowzers.each do |movie|
-      puts "#{movie[:rank]} #{movie[:title]} #{movie[:year]}"
+      puts "#{movie[:rank].colorize(:red)} #{movie[:title]} #{movie[:year]}"
     end
-    puts "Which movie's details would you like to see? Please select by ranking number:"
+    puts "Which movie's details would you like to see? Please select by ranking number:".colorize(:red)
     rank = gets.chomp.to_i
     CLI.display_by_rank(rank)
   end
