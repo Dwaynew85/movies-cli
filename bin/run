@@ -1,6 +1,6 @@
 require_relative '../config/environment.rb'
 
 puts "Hello!!!"
-puts "One moment. Pulling up IMDB's top 20 ranked movies..."
+puts "One moment. Pulling up IMDB's Top 20 ranked movies..."
 CLI.new.run
 CLI.movie_select

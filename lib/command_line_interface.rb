@@ -10,26 +10,26 @@ class CLI
 
   def self.display_movies
     Scraper.all.each do |movie|
-      puts "#{movie[:rank].colorize(:blue)} #{movie[:title]} #{movie[:year]}"
+      puts "#{movie[:rank].colorize(:yellow)} #{movie[:title]} #{movie[:year]}"
     end
   end
 
   def self.display_by_rank(rank)
     @mov = Movies.select_by_rank(rank)
-    puts "Title: #{@mov.title}"
-    puts "Rated: #{@mov.rating}"
-    puts "Genre: #{@mov.genre.class == Array ? @mov.genre.uniq.join(' & ') : (@mov.gerne)}"
-    puts "Runtime: #{@mov.runtime}"
-    puts "Released: #{@mov.release_date}"
-    puts "Summary: #{@mov.summary}"
-    puts "Directed By: #{@mov.director.class == Array ? @mov.director.uniq.join(' & ') : (@mov.director)}"
-    puts "Written By: #{@mov.writers.class == Array ? @mov.writers.uniq.join(' & ') : (@mov.writers)}"
-    puts "Starring: #{@mov.stars.class == Array ? @mov.stars.uniq.join(' & ') : (@mov.stars)}"
+    puts "#{"Title:".colorize(:yellow).underline} #{@mov.title}"
+    puts "#{"Rated:".colorize(:yellow).underline} #{@mov.rating}"
+    puts "#{"Genre:".colorize(:yellow).underline} #{@mov.genre.class == Array ? @mov.genre.uniq.join(' & ') : (@mov.gerne)}"
+    puts "#{"Runtime:".colorize(:yellow).underline} #{@mov.runtime}"
+    puts "#{"Release Date:".colorize(:yellow).underline} #{@mov.release_date}"
+    puts "#{"Summary:".colorize(:yellow).underline} #{@mov.summary}"
+    puts "#{"Directed By:".colorize(:yellow).underline} #{@mov.director.class == Array ? @mov.director.uniq.join(' & ') : (@mov.director)}"
+    puts "#{"Written By:".colorize(:yellow).underline} #{@mov.writers.class == Array ? @mov.writers.uniq.join(' & ') : (@mov.writers)}"
+    puts "#{"Starring:".colorize(:yellow).underline} #{@mov.stars.class == Array ? @mov.stars.uniq.join(' & ') : (@mov.stars)}"
     self.menu
   end
 
   def self.trailer
-    puts "Click the link to view trialer:\n #{@mov.trailer_link}\n".colorize(:green)
+    puts "#{"Click the link to view trialer:".colorize(:green)}\n #{@mov.trailer_link.colorize(:blue).underline}\n"
     sleep(1)
     self.menu_2
   end
@@ -42,15 +42,15 @@ class CLI
     above = gets.chomp.to_i - 1
     @mov = opt[above]
     if @mov.class == Movies
-      puts "Title: #{@mov.title}"
-      puts "Rated: #{@mov.rating}"
-      puts "Genre: #{@mov.genre.class == Array ? @mov.genre.uniq.join(' & ') : (@mov.gerne)}"
-      puts "Runtime: #{@mov.runtime}"
-      puts "Released: #{@mov.release_date}"
-      puts "Summary: #{@mov.summary}"
-      puts "Directed By: #{@mov.director.class == Array ? @mov.director.uniq.join(' & ') : (@mov.director)}"
-      puts "Written By: #{@mov.writers.class == Array ? @mov.writers.uniq.join(' & ') : (@mov.writers)}"
-      puts "Starring: #{@mov.stars.class == Array ? @mov.stars.uniq.join(' & ') : (@mov.stars)}"
+      puts "#{"Title:".colorize(:yellow).underline} #{@mov.title}"
+      puts "#{"Rated:".colorize(:yellow).underline} #{@mov.rating}"
+      puts "#{"Genre:".colorize(:yellow).underline} #{@mov.genre.class == Array ? @mov.genre.uniq.join(' & ') : (@mov.gerne)}"
+      puts "#{"Runtime:".colorize(:yellow).underline} #{@mov.runtime}"
+      puts "#{"Release Date:".colorize(:yellow).underline} #{@mov.release_date}"
+      puts "#{"Summary:".colorize(:yellow).underline} #{@mov.summary}"
+      puts "#{"Directed By:".colorize(:yellow).underline} #{@mov.director.class == Array ? @mov.director.uniq.join(' & ') : (@mov.director)}"
+      puts "#{"Written By:".colorize(:yellow).underline} #{@mov.writers.class == Array ? @mov.writers.uniq.join(' & ') : (@mov.writers)}"
+      puts "#{"Starring:".colorize(:yellow).underline} #{@mov.stars.class == Array ? @mov.stars.uniq.join(' & ') : (@mov.stars)}"
       self.menu
     else
       self.menu
@@ -66,10 +66,10 @@ class CLI
 
   def self.menu
     puts "What would you like to do next?".colorize(:green)
-    puts "1. View movie's trailer link".colorize(:green)
-    puts "2. Go back to list of top 20 movies".colorize(:green)
-    puts "3. Search for movies including your favorite star".colorize(:green)
-    puts "4. That's all, folks!(Exit)".colorize(:green)
+    puts "#{"1.".colorize(:green)} View movie's trailer link"
+    puts "#{"2.".colorize(:green)} Go back to list of top 20 movies"
+    puts "#{"3.".colorize(:green)} Search for movies including your favorite star"
+    puts "#{"4.".colorize(:green)} That's all, folks!(Exit)"
     menu_selection = gets.chomp
     case menu_selection
     when "1"
@@ -90,9 +90,9 @@ class CLI
 
   def self.menu_2
     puts "What would you like to do next?".colorize(:green)
-    puts "1. Go back to list of top 20 movies".colorize(:green)
-    puts "2. Search for movies including your favorite star".colorize(:green)
-    puts "3. That's all, folks!(Exit)".colorize(:green)
+    puts "#{"1.".colorize(:green)} Go back to list of top 20 movies"
+    puts "#{"2.".colorize(:green)} Search for movies including your favorite star"
+    puts "#{"3.".colorize(:green)} That's all, folks!(Exit)"
     menu_selection = gets.chomp
     case menu_selection
     when "1"
@@ -113,7 +113,7 @@ class CLI
          exit
        end
     else
-      puts "Please select between 1-4...I meant 3! 1-3. Don't select 4.".colorize(:green)
+      puts "Please select between 1-4...I meant 3! 1-3. #{"Don't select 4".colorize(:green).underline}.".colorize(:green)
       self.menu_2
     end
   end
@@ -129,5 +129,4 @@ class CLI
     rank = gets.chomp.to_i
     CLI.display_by_rank(rank)
   end
-
 end
