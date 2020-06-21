@@ -119,6 +119,9 @@ class CLI
   end
 
   def self.display_wowzers
+    puts "This may take a minute....."
+    Movies.all.clear
+    Movies.create_from_list(Scraper.wowzers)
     Scraper.wowzers.each do |movie|
       puts "#{movie[:rank]} #{movie[:title]} #{movie[:year]}"
     end

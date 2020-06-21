@@ -3,7 +3,4 @@ require_relative '../config/environment.rb'
 puts "Hello!!!"
 puts "One moment. Pulling up IMDB's top 20 ranked movies..."
 CLI.new.run
-# sleep(2)
 CLI.movie_select
-
-# sleep(2)
