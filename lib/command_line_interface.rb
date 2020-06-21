@@ -41,17 +41,9 @@ class CLI
   end
 
   def self.search
-    search = gets.chomp
-    case search
-    when "1"
-      self.display_movies
-      puts "Which movie's info would you like to see? Select between 1-20"
-      rank = gets.chomp.to_i
-      self.display_by_rank(rank)
-    else
-      puts "Please select either '1' to search by ranking, or '2' to search by star's name."
-      self.search
-    end
+    puts "Lets see if your favorite star made the cut, enter their full name(exact spelling please)"
+    star = gets.chomp
+    Movies.search_by_star(star)
   end
 
   def self.movie_select
@@ -65,7 +57,8 @@ class CLI
     puts "What would you like to do next?"
     puts "1. View movie's trailer link"
     puts "2. Go back to list of top 20 movies"
-    puts "3. That's all, folks!(Exit)"
+    puts "3. Search for movies including my favorite star"
+    puts "4. That's all, folks!(Exit)"
     menu_selection = gets.chomp
     case menu_selection
     when "1"
@@ -73,6 +66,8 @@ class CLI
     when "2"
       self.movie_select
     when "3"
+      self.search
+    when "4"
       exit
     else
       puts "Please select an option between 1-3"

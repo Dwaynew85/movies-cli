@@ -25,7 +25,8 @@ class Movies
 
   def self.search_by_star(star)
     movies = self.all.select {|movie| movie.stars.include?(star) }
-    movies.each {|movie| puts movie.title }.uniq
+    opt = movies.each_with_index {|mov, index| puts "#{index + 1}. #{mov.title}" }.uniq
+    puts "#{opt.length + 1}. Main Menu"
   end
 
   def self.all
