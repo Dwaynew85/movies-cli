@@ -36,6 +36,8 @@ class CLI
 
   def self.trailer
     puts "Click the link to view trialer:\n #{@mov.trailer_link}"
+    sleep(1)
+    self.menu_2
   end
 
   def self.search
@@ -68,7 +70,6 @@ class CLI
     case menu_selection
     when "1"
       self.trailer
-      self.menu
     when "2"
       self.movie_select
     when "3"
@@ -76,6 +77,22 @@ class CLI
     else
       puts "Please select an option between 1-3"
       self.menu
+    end
+  end
+
+  def self.menu_2
+    puts "What would you like to do next?"
+    puts "1. Go back to list of top 20 movies"
+    puts "2. That's all, folks!(Exit)"
+    menu_selection = gets.chomp
+    case menu_selection
+    when "1"
+      self.movie_select
+    when "2"
+      exit
+    else
+      puts "Please select either 1 or 2"
+      self.menu_2
     end
   end
 end
