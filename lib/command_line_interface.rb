@@ -8,7 +8,7 @@ class CLI
     Movies.create_from_list(Scraper.all)
   end
 
-  def self.display_movies
+  def self.display_movies #should be using object attributes not hash
     Scraper.all.each do |movie|
       puts "#{movie[:rank].colorize(:yellow)} #{movie[:title]} #{movie[:year]}"
     end
