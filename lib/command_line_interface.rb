@@ -5,10 +5,10 @@ class CLI
 
   def run
     Scraper.scrape_top_movies
-    Movies.create_from_list(Scraper.all)
+    Movies.create_from_list(Movies.all)
   end
 
-  def self.display_movies #should be using object attributes not hash
+  def self.display_movies
     Movies.all.each do |movie|
       puts "#{movie.rank.colorize(:yellow)} #{movie.title} #{movie.year}"
     end
@@ -35,7 +35,7 @@ class CLI
   end
 
   def self.search_by_star(star)
-    movies = Movies.all.select {|movie| movie.stars.include?(star) }
+    movies = Movies.details.select {|movie| movie.stars.include?(star) }
     opt = movies.each_with_index {|mov, index| puts "#{index + 1}. #{mov.title}" }.uniq
     puts "#{opt.length + 1}. Main Menu"
     puts "Please make a selection from the above.".colorize(:green)
@@ -81,10 +81,10 @@ class CLI
       star = gets.chomp
       self.search_by_star(star)
     when "4"
-      "Goodbye!"
+      puts "Goodbye!"
       exit
     else
-      puts "Please select an option between 1-3".colorize(:green)
+      puts "Please select an option between 1-4".colorize(:green)
       self.menu
     end
   end
@@ -103,7 +103,7 @@ class CLI
       star = gets.chomp
       self.search_by_star(star)
     when "3"
-      "Goodbye!"
+      puts "Goodbye!"
       exit
     else
       puts "Please select between 1-3."

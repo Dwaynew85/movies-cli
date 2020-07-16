@@ -28,7 +28,7 @@ class Movies
 
   def self.select_by_rank(rank)
     index = rank -= 1
-    self.all[index]
+    self.details[index]
   end
 
   def self.create_from_list(movie_list)
