@@ -4,7 +4,7 @@ class CLI
   attr_accessor :mov
 
   def run
-    Scraper.new
+    Scraper.scrape_top_movies
     Movies.create_from_list(Scraper.all)
   end
 
