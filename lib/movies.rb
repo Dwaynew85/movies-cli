@@ -1,13 +1,17 @@
 require_relative '../config/environment.rb'
+require_relative 'scraper.rb'
 
 class Movies
-  attr_accessor :title, :rating, :runtime, :genre, :release_date, :summary, :director, :writers, :stars, :trailer_link
+  attr_accessor :title, :rating, :runtime, :genre, :release_date, :summary, :director, :writers, :stars, :trailer_link, :rank, :year, :link
 
   @@all = []
 
-  def initialize(details_hash)
-    details_hash.each {|k, v| self.send(("#{k}="), v)}
-    @@all << self
+  def self.save_top_20 # takes array of hashes of top 20 and creates objects
+    Scraper.scrape_top_movies
+    Scraper.all.each do |k, v|
+      self.send(("#{k}="), v)
+      @@all << self
+    end
   end
 
   def self.select_by_rank(rank)
@@ -28,3 +32,4 @@ class Movies
   end
 
 end
+binding.pry
