@@ -9,8 +9,8 @@ class CLI
   end
 
   def self.display_movies #should be using object attributes not hash
-    Scraper.all.each do |movie|
-      puts "#{movie[:rank].colorize(:yellow)} #{movie[:title]} #{movie[:year]}"
+    Movies.all.each do |movie|
+      puts "#{movie.rank.colorize(:yellow)} #{movie.title} #{movie.year}"
     end
   end
 
@@ -81,6 +81,7 @@ class CLI
       star = gets.chomp
       self.search_by_star(star)
     when "4"
+      "Goodbye!"
       exit
     else
       puts "Please select an option between 1-3".colorize(:green)
@@ -102,31 +103,11 @@ class CLI
       star = gets.chomp
       self.search_by_star(star)
     when "3"
+      "Goodbye!"
       exit
-    when "4"
-      puts "You sure you wanna go for broke? Select y or n".colorize(:red)
-      broke = gets.chomp
-      if broke == "y" || broke =="Y"
-        puts "Here's the top 250!!!!".colorize(:red).underline
-         self.display_wowzers
-       else
-         exit
-       end
     else
-      puts "Please select between 1-4...I meant 3! 1-3. #{"Don't select 4".colorize(:green).underline}.".colorize(:green)
+      puts "Please select between 1-3."
       self.menu_2
     end
-  end
-
-  def self.display_wowzers
-    puts "This may take a minute.....".colorize(:red)
-    Movies.all.clear
-    Movies.create_from_list(Scraper.wowzers)
-    Scraper.wowzers.each do |movie|
-      puts "#{movie[:rank].colorize(:red)} #{movie[:title]} #{movie[:year]}"
-    end
-    puts "Which movie's details would you like to see? Please select by ranking number:".colorize(:red)
-    rank = gets.chomp.to_i
-    CLI.display_by_rank(rank)
   end
 end

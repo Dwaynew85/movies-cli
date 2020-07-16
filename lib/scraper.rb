@@ -15,9 +15,8 @@ class Scraper
       movies[:rank] = details[0].chomp(".")
       movies[:year] = details[2]
       movies[:link] = "https://www.imdb.com" + movie.children[1].attributes["href"].value
-      Movies.new(movies) unless Movies.all.length == 20
+      Movies.new.save_from_scraper(movies) unless Movies.all.length == 20
     end
-    binding.pry
   end
 
   def self.all
