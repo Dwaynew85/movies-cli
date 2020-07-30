@@ -4,13 +4,14 @@ class CLI
   attr_accessor :mov
 
   def run
-    Scraper.scrape_top_movies
-    Movies.create_from_list(Movies.all)
+    Scraper.new
+    Movies.create_from_list(Scraper.all)
   end
 
-  def self.display_movies
-    Movies.all.each do |movie|
-      puts "#{movie.rank.colorize(:yellow)} #{movie.title} #{movie.year}"
+  def self.display_movies #displays movies in alphabetical order. change back to displaying in rank order after refactoring movies methods and objects
+    sorted_movies = Movies.all.sort_by {|movie| movie.title}
+    sorted_movies.each do |movie|
+      puts "#{movie.title.colorize(:yellow)} #{movie.year}"
     end
   end
 
@@ -35,7 +36,7 @@ class CLI
   end
 
   def self.search_by_star(star)
-    movies = Movies.details.select {|movie| movie.stars.include?(star) }
+    movies = Movies.all.select {|movie| movie.stars.include?(star) }
     opt = movies.each_with_index {|mov, index| puts "#{index + 1}. #{mov.title}" }.uniq
     puts "#{opt.length + 1}. Main Menu"
     puts "Please make a selection from the above.".colorize(:green)
@@ -81,10 +82,9 @@ class CLI
       star = gets.chomp
       self.search_by_star(star)
     when "4"
-      puts "Goodbye!"
       exit
     else
-      puts "Please select an option between 1-4".colorize(:green)
+      puts "Please select an option between 1-3".colorize(:green)
       self.menu
     end
   end
@@ -103,11 +103,21 @@ class CLI
       star = gets.chomp
       self.search_by_star(star)
     when "3"
-      puts "Goodbye!"
       exit
+    when "4"
+      puts "You sure you wanna go for broke? Select y or n".colorize(:red)
+      broke = gets.chomp
+      if broke == "y" || broke =="Y"
+        puts "Here's the top 250!!!!".colorize(:red).underline
+         self.display_wowzers
+       else
+         exit
+       end
     else
-      puts "Please select between 1-3."
+      puts "Please select between 1-4...I meant 3! 1-3. #{"Don't select 4".colorize(:green).underline}.".colorize(:green)
       self.menu_2
     end
   end
+
+
 end

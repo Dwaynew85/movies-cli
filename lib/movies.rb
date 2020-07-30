@@ -26,16 +26,18 @@ class Movies
   end
 
 
-  def self.select_by_rank(rank)
+  def self.select_by_rank(rank) #shouldn't have seperate details array. adds to movie object
     index = rank -= 1
     self.details[index]
   end
 
   def self.create_from_list(movie_list)
     movie_list.each do |movies|
-      link = movies.link
+      link = movies[:link]
       info = Scraper.details(link)
-      self.new.save_details(info)
+      movie= self.new
+      movie.save_details(info)
+      @@all << movie
     end
   end
 

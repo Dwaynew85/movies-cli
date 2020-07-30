@@ -1,11 +1,10 @@
 require_relative '../config/environment.rb'
-require_relative 'movies.rb'
 
 class Scraper
 
   @@all = []
 
-  def self.scrape_top_movies #scrapes and creates array of hashes that list the title, rank, year, and link of top 20 movies
+  def initialize #creates array of hashes that list the title, rank, year, and link of top 20 movies
     doc = Nokogiri::HTML(open("https://www.imdb.com/chart/top/?ref_=nv_mv_250")).css(".lister-list")
     imdb = doc.css(".titleColumn")
     imdb.each do |movie|
@@ -15,15 +14,15 @@ class Scraper
       movies[:rank] = details[0].chomp(".")
       movies[:year] = details[2]
       movies[:link] = "https://www.imdb.com" + movie.children[1].attributes["href"].value
-      Movies.new.save_from_scraper(movies) unless Movies.all.length == 20
+      @@all << movies
     end
   end
 
   def self.all
-    @@all
+    @@all[0..19]
   end
 
-  def self.details(link) #scrapes and creates a hash containing specific movie details
+  def self.details(link)
     movie_details = {}
     mov = Nokogiri::HTML(open(link))
     movie_details[:title] = mov.css(".title_wrapper h1").text.strip
@@ -44,4 +43,5 @@ class Scraper
     end
     movie_details
   end
+
 end
